@@ -20,3 +20,25 @@ condition = (budget_lookup.index >= 'A Bag of Hammers') & (budget_lookup.index <
 # Pull rows conditionally
 budget_lookup_A_B = budget_lookup[condition]
 
+# PART C: Numbers as indices (loc vs iloc)
+
+# Create a series with runtime as the index
+runtime_lookup = pd.Series(df['title'].values, index=df['runtime'])
+runtime_lookup = runtime_lookup.sort_index()
+print(runtime_lookup)
+
+
+# FIlter series by removing movies > 180 min
+# and < 10 min, pulling only rows that are in between
+condition2 = (runtime_lookup.index > 10) & (runtime_lookup.index < 180)
+runtime_lookup = runtime_lookup[condition2]
+print(runtime_lookup)
+
+
+# Use our series look_up object to answer questions
+# How many movies are exactly 40 minutes long?
+print(runtime_lookup.loc[40].shape) # .loc retrieves by explictit index
+# 42
+
+print(runtime_lookup.iloc[100]) # what movie is at the 100th row here?
+# the i in iloc stands for "implicit" like the implied inde rather then the index that's explicitly there
